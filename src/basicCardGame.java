@@ -12,6 +12,8 @@ public class basicCardGame {
         StarterDeck = createDeck();
         shuffleCards(StarterDeck);
         printDeck(StarterDeck);
+        player1Hand(StarterDeck);
+        player2Hand(StarterDeck);
 
     }
 
@@ -54,4 +56,37 @@ public class basicCardGame {
             System.out.print("["+temp.getRank()+","+temp.getSuit()+"]"+"  ");
         }
     }
+
+    public static List<card> player1Hand(List<card> someDeck){
+        List<card> playerHand = new ArrayList<>();
+
+        for(int i =0; i < 7; i++){
+            playerHand.add(someDeck.get(i));
+            someDeck.remove(i);
+        }
+        System.out.println(" ");
+        System.out.println("Some deck length: " + someDeck.size());
+        for(int i = 0; i < playerHand.size(); i++){
+            System.out.print("["+ playerHand.get(i).getRank()+","+ playerHand.get(i).getSuit()+"]");
+        }
+
+        return playerHand;
+    }
+    public static List<card> player2Hand(List<card> someDeck){
+        List<card> playerHand = new ArrayList<>();
+
+        for(int i =0; i < 7; i++){
+            playerHand.add(someDeck.get(i));
+            someDeck.remove(i);
+        }
+        System.out.println(" ");
+        System.out.println("Some deck length: " + someDeck.size());
+        for(int i = 0; i < playerHand.size(); i++){
+            System.out.print("["+ playerHand.get(i).getRank()+","+ playerHand.get(i).getSuit()+"]");
+        }
+
+        return playerHand;
+    }
+
+
 }
