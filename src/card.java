@@ -2,10 +2,17 @@ public class card {
 
     private String suit;
     private String rank;
+    private Integer rankInt;
 
     public card(String suit, String rank){
         this.suit = suit;
         this.rank = rank;
+    }
+
+    public card(String suit, String rank, Integer rankInt){
+        this.suit = suit;
+        this.rank = rank;
+        this.rankInt = rankInt;
     }
 
     public void setSuit(String suit) {
@@ -16,6 +23,8 @@ public class card {
         this.rank = rank;
     }
 
+    public void setRankInt(Integer rankInt){ this.rankInt = rankInt;}
+
     public String getRank() {
         return rank;
     }
@@ -23,5 +32,7 @@ public class card {
     public String getSuit() {
         return suit;
     }
+
+    public Integer getRankInt() { return rankInt;}
 
 }

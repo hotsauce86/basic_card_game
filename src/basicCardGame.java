@@ -12,8 +12,10 @@ public class basicCardGame {
         StarterDeck = createDeck();
         shuffleCards(StarterDeck);
         printDeck(StarterDeck);
-        player1Hand(StarterDeck);
-        player2Hand(StarterDeck);
+       // player1Hand(StarterDeck);
+       // player2Hand(StarterDeck);
+        findPairs(player1Hand(StarterDeck));
+        findPairs(player2Hand(StarterDeck));
 
     }
 
@@ -22,16 +24,17 @@ public class basicCardGame {
          ArrayList<card> GameDeck = new ArrayList<>();
 
         String[] cardRanks = new String[]{"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+        Integer[] cardRanksInt = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13};
 
 
         for(int i = 0; i <13; i++){
-            card newCard1 =  new card("Spade", cardRanks[i]);
+            card newCard1 =  new card("Spade", cardRanks[i], cardRanksInt[i]);
             GameDeck.add(newCard1);
-            card newCard2 =  new card("Club", cardRanks[i]);
+            card newCard2 =  new card("Club", cardRanks[i], cardRanksInt[i]);
             GameDeck.add(newCard2);
-            card newCard3 =  new card("Diamond", cardRanks[i]);
+            card newCard3 =  new card("Diamond", cardRanks[i], cardRanksInt[i]);
             GameDeck.add(newCard3);
-            card newCard4 =  new card("Heart", cardRanks[i]);
+            card newCard4 =  new card("Heart", cardRanks[i], cardRanksInt[i]);
             GameDeck.add(newCard4);
         }
 
@@ -88,5 +91,24 @@ public class basicCardGame {
         return playerHand;
     }
 
+    public static List<String> findPairs(List<card> somePlayer){
+        System.out.println("/////////Checking for Pairs///////////");
+        List<String> listOfPairs = new ArrayList<>();
+        List<card> somePlayerCopy = somePlayer;
+            card tempCard = somePlayerCopy.get(0);
+            //skip the first one we already have it
+            int seti = 1;
+            for(int j = 0; j < somePlayerCopy.size()-1; j++){
+                tempCard=somePlayerCopy.get(j);
+                for(int i = seti; i < somePlayerCopy.size(); i++){
+                    if(somePlayerCopy.get(i).getRankInt() == tempCard.getRankInt()){
+                        listOfPairs.add("[Pair:" + tempCard.getRank()+"," +tempCard.getSuit()+":"+somePlayerCopy.get(i).getRank()+","+somePlayerCopy.get(i).getSuit()+"]");
+                    }
+                }
+                seti++;
+            }
+        System.out.println(listOfPairs);
+        return listOfPairs;
+    }
 
 }
