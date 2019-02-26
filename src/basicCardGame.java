@@ -102,7 +102,7 @@ public class basicCardGame {
                 tempCard=somePlayerCopy.get(j);
                 for(int i = seti; i < somePlayerCopy.size(); i++){
                     if(somePlayerCopy.get(i).getRankInt() == tempCard.getRankInt()){
-                        listOfPairs.add("[Pair:" + tempCard.getRank()+"," +tempCard.getSuit()+":"+somePlayerCopy.get(i).getRank()+","+somePlayerCopy.get(i).getSuit()+"]");
+                        listOfPairs.add("[" + tempCard.getRank()+"," +tempCard.getSuit()+":"+somePlayerCopy.get(i).getRank()+","+somePlayerCopy.get(i).getSuit()+"]");
                     }
                 }
                 seti++;
