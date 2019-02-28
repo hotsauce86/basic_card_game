@@ -35,4 +35,9 @@ public class card {
 
     public Integer getRankInt() { return rankInt;}
 
+    public String getCard(){
+                            String theCard = "[" + this.getSuit() + "," + this.getRank()+ "]";
+                            return theCard;
+                            }
+
 }
