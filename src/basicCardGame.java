@@ -146,7 +146,7 @@ public class basicCardGame {
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
         Boolean aceinHand = false;
         Boolean aceinHouse = false;
-        Boolean doubleaces = false;
+        Boolean doublecards = false;
         Boolean goforsplit = false;
         Integer handValue = 0;
         Integer handValueSplit = 0;
@@ -165,19 +165,19 @@ public class basicCardGame {
         //creating players hand
         for(int i =0; i < 2; i++){
 
+            //make sure double aces dose not mean 22!
             if(someDeck.get(i).getRankInt().equals(1)){
                 if(aceinHand == false){
                     handValue = handValue +10;
                     aceinHand = true;
                 }
-                else{
-                    doubleaces = true;
-                }
-
             }
             currentHand.add(someDeck.get(i));
 
             someDeck.remove(i);
+        }
+        if(currentHand.get(0).getRankInt() == currentHand.get(1).getRankInt()){
+            doublecards =true;
         }
         //creating house hand
         for(int i =0; i < 2; i++){
@@ -220,8 +220,8 @@ public class basicCardGame {
         System.out.println("Current value: " + handValue);
         System.out.println("_-_-_-_-_-_-_-");
 
-        if(doubleaces == true){
-            System.out.println("DOUBLE ACES: Do you want to split? \' type y/n \'");
+        if(doublecards == true){
+            System.out.println("DOUBLE CARDS: Do you want to split? \' type y/n \'");
             String answer = scan.nextLine();
             if(answer.equals("y") || answer.equals("Y")){
                 goforsplit = true;
@@ -230,35 +230,56 @@ public class basicCardGame {
 
         }
         if(goforsplit == true){
+
+
+
+            currentHandSplit.add(currentHand.get(1));
+            currentHand.remove(1);
+
+            currentHand.add(someDeck.get(0));
+            currentHandSplit.add(someDeck.get(1));
+            someDeck.remove(0);
+            someDeck.remove(1);
+
+            blackJackFaceCard(currentHand);
+            blackJackFaceCard(currentHandSplit);
+
+            //left
+            handValue = currentHand.get(0).getRankInt()+ someDeck.get(0).getRankInt();
+            //right
+            handValueSplit = currentHandSplit.get(0).getRankInt() +someDeck.get(1).getRankInt();
+
             System.out.println(" Play or stay SPLIT? \' type y/n \'");
             String answer = scan.nextLine();
 
             System.out.println("answer is : " + answer);
-            while(answer.equals("y") || answer.equals("Y")){
 
-                currentHandSplit.add(currentHand.get(0));
-                currentHand.remove(0);
+            while(answer.equals("y") || answer.equals("Y")){
 
                 currentHand.add(someDeck.get(0));
                 currentHandSplit.add(someDeck.get(1));
+                someDeck.remove(0);
+                someDeck.remove(1);
 
                 blackJackFaceCard(currentHand);
                 blackJackFaceCard(currentHandSplit);
 
-                handValue += someDeck.get(0).getRankInt();
-                handValueSplit += someDeck.get(1).getRankInt();
+                handValue = 0;
+                handValueSplit = 0;
 
-                System.out.print("Split: RIGHT:");
+
+                System.out.print("RIGHT:");
                 for(card temp : currentHand){
+                    handValue += temp.getRankInt();
                     System.out.print(temp.getCard());
                 }
-                System.out.print("\t LEFT:");
+                System.out.println("");
+                System.out.print("LEFT:");
                 for(card temp : currentHandSplit){
+                    handValueSplit += temp.getRankInt();
                     System.out.print(temp.getCard());
                 }
 
-                someDeck.remove(0);
-                someDeck.remove(1);
                 System.out.println("");
                 System.out.println("currentHand: " + handValue);
                 System.out.println("currentHandSPLIT: " + handValueSplit);
