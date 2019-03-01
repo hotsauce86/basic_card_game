@@ -142,6 +142,7 @@ public class basicCardGame {
     public static void gameOfBlackJack(List<card> someDeck){
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
         Boolean aceinHand = false;
+        Boolean aceinHouse = false;
         Integer handValue = 0;
         Integer houseValue = 0;
         Scanner scan = new Scanner(System.in);
@@ -166,6 +167,10 @@ public class basicCardGame {
         }
         //creating house hand
         for(int i =0; i < 2; i++){
+            if(someDeck.get(i).getRankInt().equals(1)){
+                houseValue += 10;
+                aceinHouse = true;
+            }
             houseHand.add(someDeck.get(i));
             someDeck.remove(i);
         }
@@ -178,6 +183,7 @@ public class basicCardGame {
             aceinHand = true;
             handValue += 10;
         }
+
 
         blackJackFaceCard(currentHand);
         blackJackFaceCard(houseHand);
@@ -229,12 +235,23 @@ public class basicCardGame {
         }
 
         if(handValue> houseValue && handValue <22){
-            System.out.println("houseHand :  " + houseValue);
-            System.out.println("currentHand: " + handValue);
+            System.out.print("houseHand  : " + houseValue + "\t");
+            System.out.println( houseHand.get(0).getCard()+ " " +houseHand.get(1).getCard());
+            System.out.print("currentHand: " + handValue + "\t");
+           for(card temp : currentHand){
+               System.out.print(temp.getCard() + " ");
+           }
+            System.out.println("");
             System.out.println("You Win");
         }else{
-            System.out.println("houseHand :  " + houseValue);
-            System.out.println("currentHand: " + handValue);
+            System.out.print("houseHand  : " + houseValue + "\t");
+            System.out.println( houseHand.get(0).getCard()+ " " +houseHand.get(1).getCard());
+            System.out.print("currentHand: " + handValue + "\t");
+            for(card temp : currentHand){
+                System.out.print(temp.getCard() + " ");
+            }
+            System.out.println("");
+
             System.out.println("You Lose");
         }
         scan.close();
