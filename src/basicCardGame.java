@@ -33,8 +33,11 @@ public class basicCardGame {
 
          ArrayList<card> GameDeck = new ArrayList<>();
 
-        String[] cardRanks = new String[]{"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
-        Integer[] cardRanksInt = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13};
+       // String[] cardRanks = new String[]{"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+       // Integer[] cardRanksInt = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13};
+
+        String[] cardRanks = new String[]{"A","2","A","4","A","A","A","A","A","10","J","Q","K"};
+        Integer[] cardRanksInt = new Integer[]{1,2,1,4,1,1,1,1,1,10,11,12,13};
 
 
         for(int i = 0; i <13; i++){
@@ -143,10 +146,14 @@ public class basicCardGame {
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
         Boolean aceinHand = false;
         Boolean aceinHouse = false;
+        Boolean doubleaces = false;
+        Boolean goforsplit = false;
         Integer handValue = 0;
+        Integer handValueSplit = 0;
         Integer houseValue = 0;
         Scanner scan = new Scanner(System.in);
         List<card> currentHand = new ArrayList();
+        List<card> currentHandSplit = new ArrayList<>();
         List<card> houseHand = new ArrayList();
         System.out.println("");
         System.out.println("Let's play some Blackjack!");
@@ -157,9 +164,16 @@ public class basicCardGame {
 
         //creating players hand
         for(int i =0; i < 2; i++){
+
             if(someDeck.get(i).getRankInt().equals(1)){
-                handValue += 10;
-                aceinHand = true;
+                if(aceinHand == false){
+                    handValue = handValue +10;
+                    aceinHand = true;
+                }
+                else{
+                    doubleaces = true;
+                }
+
             }
             currentHand.add(someDeck.get(i));
 
@@ -168,8 +182,11 @@ public class basicCardGame {
         //creating house hand
         for(int i =0; i < 2; i++){
             if(someDeck.get(i).getRankInt().equals(1)){
-                houseValue += 10;
-                aceinHouse = true;
+                if(aceinHouse == false){
+                    houseValue = houseValue + 10;
+                    aceinHouse = true;
+                }
+
             }
             houseHand.add(someDeck.get(i));
             someDeck.remove(i);
@@ -177,84 +194,140 @@ public class basicCardGame {
 
         //check if we have an ace
 
-
+        /*
         if(currentHand.get(0).getRankInt().equals(1) || currentHand.get(1).getRankInt().equals(1)){
             System.out.println("We got an Ace!");
             aceinHand = true;
             handValue += 10;
         }
+        */
 
 
         blackJackFaceCard(currentHand);
         blackJackFaceCard(houseHand);
 
 
-        handValue = currentHand.get(0).getRankInt() + currentHand.get(1).getRankInt();
-        houseValue = houseHand.get(0).getRankInt() + houseHand.get(1).getRankInt();
+
+        handValue = handValue + currentHand.get(0).getRankInt() + currentHand.get(1).getRankInt();
+        houseValue = houseValue + houseHand.get(0).getRankInt() + houseHand.get(1).getRankInt();
 
 
         /*
                 PLAY SECTION
         */
         // we give the user information about their hand
-        System.out.println("Current hand:   [" + currentHand.get(0).getCard() +  "]   {" + currentHand.get(1).getCard() + "]");
+        System.out.println("Current hand : " + currentHand.get(0).getCard() +  "\t" + currentHand.get(1).getCard() + "");
         System.out.println("Current value: " + handValue);
         System.out.println("_-_-_-_-_-_-_-");
-        System.out.println(" Play or stay? \' type y/n \'");
-        String answer = scan.nextLine();
 
-        System.out.println("answer is : " + answer);
-        while(answer.equals("y") || answer.equals("Y")){
-            System.out.println("_-_-_-_-_-_-_-");
-            currentHand.add(someDeck.get(0));
-            handValue += someDeck.get(0).getRankInt();
-            someDeck.remove(0);
-
-            if(handValue >21 && aceinHand == true){
-                handValue = handValue -10;
+        if(doubleaces == true){
+            System.out.println("DOUBLE ACES: Do you want to split? \' type y/n \'");
+            String answer = scan.nextLine();
+            if(answer.equals("y") || answer.equals("Y")){
+                goforsplit = true;
             }
 
-            System.out.print("Current hand:   ");
-            for(card temp : currentHand){
-                System.out.print(temp.getCard());
-            }
-            System.out.println("");
-            System.out.println("Current value: " + handValue);
 
-            if(handValue > 21){
-                System.out.println("Bust: You lose");
-                break;
+        }
+        if(goforsplit == true){
+            System.out.println(" Play or stay SPLIT? \' type y/n \'");
+            String answer = scan.nextLine();
+
+            System.out.println("answer is : " + answer);
+            while(answer.equals("y") || answer.equals("Y")){
+
+                currentHandSplit.add(currentHand.get(0));
+                currentHand.remove(0);
+
+                currentHand.add(someDeck.get(0));
+                currentHandSplit.add(someDeck.get(1));
+
+                blackJackFaceCard(currentHand);
+                blackJackFaceCard(currentHandSplit);
+
+                handValue += someDeck.get(0).getRankInt();
+                handValueSplit += someDeck.get(1).getRankInt();
+
+                System.out.print("Split: RIGHT:");
+                for(card temp : currentHand){
+                    System.out.print(temp.getCard());
+                }
+                System.out.print("\t LEFT:");
+                for(card temp : currentHandSplit){
+                    System.out.print(temp.getCard());
+                }
+
+                someDeck.remove(0);
+                someDeck.remove(1);
+                System.out.println("");
+                System.out.println("currentHand: " + handValue);
+                System.out.println("currentHandSPLIT: " + handValueSplit);
+                System.out.println(" Play or stay? \' type y/n \'");
+                answer = scan.next();
+
             }
+            scan.close();
+        }
+        else {
+
+            System.out.println(" Play or stay? \' type y/n \'");
+            String answer = scan.nextLine();
+
+            System.out.println("answer is : " + answer);
+            while (answer.equals("y") || answer.equals("Y")) {
+                System.out.println("_-_-_-_-_-_-_-");
+                currentHand.add(someDeck.get(0));
+
+                blackJackFaceCard(currentHand);
+                handValue += someDeck.get(0).getRankInt();
+                someDeck.remove(0);
+
+
+                if (handValue > 21 && aceinHand == true) {
+                    handValue = handValue - 10;
+                }
+
+                System.out.print("Current hand:   ");
+                for (card temp : currentHand) {
+                    System.out.print(temp.getCard());
+                }
+                System.out.println("");
+                System.out.println("Current value: " + handValue);
+
+                if (handValue > 21) {
+                    System.out.println("Bust: You lose");
+                    break;
+                }
                 //System.out.println("houseHand :  " + houseValue);
                 System.out.println("currentHand: " + handValue);
                 System.out.println(" Play or stay? \' type y/n \'");
                 answer = scan.next();
 
 
-
-        }
-
-        if(handValue> houseValue && handValue <22){
-            System.out.print("houseHand  : " + houseValue + "\t");
-            System.out.println( houseHand.get(0).getCard()+ " " +houseHand.get(1).getCard());
-            System.out.print("currentHand: " + handValue + "\t");
-           for(card temp : currentHand){
-               System.out.print(temp.getCard() + " ");
-           }
-            System.out.println("");
-            System.out.println("You Win");
-        }else{
-            System.out.print("houseHand  : " + houseValue + "\t");
-            System.out.println( houseHand.get(0).getCard()+ " " +houseHand.get(1).getCard());
-            System.out.print("currentHand: " + handValue + "\t");
-            for(card temp : currentHand){
-                System.out.print(temp.getCard() + " ");
             }
-            System.out.println("");
 
-            System.out.println("You Lose");
+            if (handValue > houseValue && handValue < 22) {
+                System.out.print("houseHand  : " + houseValue + "\t");
+                System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
+                System.out.print("currentHand: " + handValue + "\t");
+                for (card temp : currentHand) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.println("You Win");
+            } else {
+                System.out.print("houseHand  : " + houseValue + "\t");
+                System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
+                System.out.print("currentHand: " + handValue + "\t");
+                for (card temp : currentHand) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+
+                System.out.println("You Lose");
+            }
+            scan.close();
         }
-        scan.close();
     }
 
 }
