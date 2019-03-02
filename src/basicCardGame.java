@@ -36,8 +36,9 @@ public class basicCardGame {
        // String[] cardRanks = new String[]{"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
        // Integer[] cardRanksInt = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13};
 
-        String[] cardRanks = new String[]{"A","2","A","4","A","A","A","A","A","10","J","Q","K"};
-        Integer[] cardRanksInt = new Integer[]{1,2,1,4,1,1,1,1,1,10,11,12,13};
+        // for split scenario
+        String[] cardRanks = new String[]{"2","4","2","4","2","4","2","4","2","4","2","4","2","4",};
+        Integer[] cardRanksInt = new Integer[]{2,4,2,4,2,4,2,4,2,4,2,4,2,4,};
 
 
         for(int i = 0; i <13; i++){
@@ -248,8 +249,13 @@ public class basicCardGame {
             handValue = currentHand.get(0).getRankInt()+ someDeck.get(0).getRankInt();
             //right
             handValueSplit = currentHandSplit.get(0).getRankInt() +someDeck.get(1).getRankInt();
+            System.out.println("Current hand  RIGHT: " + currentHand.get(0).getCard() +  "\t" + currentHand.get(1).getCard() + "");
+            System.out.println("Current hand  LEFT : " + currentHandSplit.get(0).getCard() +  "\t" + currentHandSplit.get(1).getCard() + "");
+            System.out.println("Current value: " + handValue);
+            System.out.println("_-_-_-_-_-_-_-");
 
-            System.out.println(" Play or stay SPLIT? \' type y/n \'");
+
+            System.out.println(" SPLIT : Play or stay? \' type y/n \'");
             String answer = scan.nextLine();
 
             System.out.println("answer is : " + answer);
@@ -274,7 +280,7 @@ public class basicCardGame {
                     System.out.print(temp.getCard());
                 }
                 System.out.println("");
-                System.out.print("LEFT:");
+                System.out.print("LEFT :");
                 for(card temp : currentHandSplit){
                     handValueSplit += temp.getRankInt();
                     System.out.print(temp.getCard());
@@ -287,6 +293,58 @@ public class basicCardGame {
                 answer = scan.next();
 
             }
+            //split close
+            if (handValue > houseValue && handValue < 22) {
+                System.out.print("houseHand  : " + houseValue + "\t\t\t");
+                System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
+                System.out.print("currentHand RIGHT: " + handValue + "\t");
+
+                for (card temp : currentHand) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.print("currentHand LEFT : " + handValueSplit + "\t");
+                for (card temp : currentHandSplit) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.println("You Win");
+            } else if (handValueSplit > houseValue && handValueSplit < 22){
+                System.out.print("houseHand  : " + houseValue + "\t\t\t");
+                System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
+
+                System.out.print("currentHand RIGHT: " + handValue + "\t");
+
+                for (card temp : currentHand) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.print("currentHand LEFT : " + handValueSplit + "\t");
+                for (card temp : currentHandSplit) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.println("You Win");
+            }
+            else {
+                System.out.print("houseHand  : " + houseValue + "\t\t\t");
+                System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
+                System.out.print("currentHand RIGHT: " + handValue + "\t");
+                for (card temp : currentHand) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.print("currentHand LEFT : " + handValueSplit + "\t");
+                for (card temp : currentHandSplit) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+
+                System.out.println("You Lose");
+            }
+
+
+
             scan.close();
         }
         else {
