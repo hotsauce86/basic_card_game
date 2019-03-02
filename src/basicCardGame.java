@@ -25,7 +25,7 @@ public class basicCardGame {
         shuffleCards(StarterDeck);
         shuffleCards(StarterDeck);
 
-        gameOfBlackJack(StarterDeck);
+        gameOfBlackJack(StarterDeck, 200);
 
     }
 
@@ -143,7 +143,7 @@ public class basicCardGame {
     }
 
 
-    public static void gameOfBlackJack(List<card> someDeck){
+    public static void gameOfBlackJack(List<card> someDeck, int wallet){
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
         Boolean aceinHand = false;
         Boolean aceinHouse = false;
@@ -152,6 +152,9 @@ public class basicCardGame {
         Integer handValue = 0;
         Integer handValueSplit = 0;
         Integer houseValue = 0;
+        Integer cash = wallet;
+        String newgame = "";
+        String answer = "";
         Scanner scan = new Scanner(System.in);
         List<card> currentHand = new ArrayList();
         List<card> currentHandSplit = new ArrayList<>();
@@ -162,7 +165,10 @@ public class basicCardGame {
         /*
                 BEFORE PLAY SECTION
          */
-
+        if(wallet < 1){
+            System.out.println("Hey, come back when you get some money huh.");
+            System.exit(0);
+        }
         //creating players hand
         for(int i =0; i < 2; i++){
 
@@ -223,7 +229,7 @@ public class basicCardGame {
 
         if(doublecards == true){
             System.out.println("DOUBLE CARDS: Do you want to split? \' type y/n \'");
-            String answer = scan.nextLine();
+            answer = scan.nextLine();
             if(answer.equals("y") || answer.equals("Y")){
                 goforsplit = true;
             }
@@ -256,7 +262,7 @@ public class basicCardGame {
 
 
             System.out.println(" SPLIT : Play or stay? \' type y/n \'");
-            String answer = scan.nextLine();
+            answer = scan.nextLine();
 
             System.out.println("answer is : " + answer);
 
@@ -294,7 +300,24 @@ public class basicCardGame {
 
             }
             //split close
-            if (handValue > houseValue && handValue < 22) {
+            if (handValue > houseValue && handValue < 22 && handValueSplit > houseValue && handValueSplit < 22) {
+                System.out.print("houseHand  : " + houseValue + "\t\t\t");
+                System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
+                System.out.print("currentHand RIGHT: " + handValue + "\t");
+
+                for (card temp : currentHand) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.print("currentHand LEFT : " + handValueSplit + "\t");
+                for (card temp : currentHandSplit) {
+                    System.out.print(temp.getCard() + " ");
+                }
+                System.out.println("");
+                System.out.println("Double Win!!!");
+                cash += 200;
+            }
+            else if (handValue > houseValue && handValue < 22) {
                 System.out.print("houseHand  : " + houseValue + "\t\t\t");
                 System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
                 System.out.print("currentHand RIGHT: " + handValue + "\t");
@@ -309,6 +332,7 @@ public class basicCardGame {
                 }
                 System.out.println("");
                 System.out.println("You Win");
+                cash += 50;
             } else if (handValueSplit > houseValue && handValueSplit < 22){
                 System.out.print("houseHand  : " + houseValue + "\t\t\t");
                 System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
@@ -325,6 +349,7 @@ public class basicCardGame {
                 }
                 System.out.println("");
                 System.out.println("You Win");
+                cash += 50;
             }
             else {
                 System.out.print("houseHand  : " + houseValue + "\t\t\t");
@@ -341,6 +366,7 @@ public class basicCardGame {
                 System.out.println("");
 
                 System.out.println("You Lose");
+                cash -= 100;
             }
 
 
@@ -350,7 +376,7 @@ public class basicCardGame {
         else {
 
             System.out.println(" Play or stay? \' type y/n \'");
-            String answer = scan.nextLine();
+            answer = scan.nextLine();
 
             System.out.println("answer is : " + answer);
             while (answer.equals("y") || answer.equals("Y")) {
@@ -394,6 +420,8 @@ public class basicCardGame {
                 }
                 System.out.println("");
                 System.out.println("You Win");
+                cash +=100;
+
             } else {
                 System.out.print("houseHand  : " + houseValue + "\t");
                 System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
@@ -404,6 +432,21 @@ public class basicCardGame {
                 System.out.println("");
 
                 System.out.println("You Lose");
+                cash -= 200;
+            }
+            System.out.println("Cash: " + cash);
+            System.out.println(" Play Blackjack again? \' type y/n \'");
+
+            //scanner doesn't want to wake up the first time?
+            newgame = scan.nextLine();
+            newgame = scan.nextLine();
+
+            System.out.println("answer is : " + newgame);
+
+            if(newgame.equals("y") || newgame.equals("Y")){
+                someDeck = createDeck();
+                shuffleCards(someDeck);
+                gameOfBlackJack(someDeck, cash);
             }
             scan.close();
         }

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b61e4f5-5bb7-4480-ab4c-49d732c2f825" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/basic_card_game/basicCardGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/basic_card_game/basicCardGame.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/basicCardGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/basicCardGame.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -22,8 +20,8 @@
       <file leaf-file-name="basicCardGame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/basicCardGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="329" column="71" selection-start-line="329" selection-start-column="71" selection-end-line="329" selection-end-column="71" />
+            <state relative-caret-position="257">
+              <caret line="439" column="61" selection-start-line="439" selection-start-column="61" selection-end-line="439" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -494,8 +492,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/basicCardGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="329" column="71" selection-start-line="329" selection-start-column="71" selection-end-line="329" selection-end-column="71" />
+        <state relative-caret-position="257">
+          <caret line="439" column="61" selection-start-line="439" selection-start-column="61" selection-end-line="439" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
