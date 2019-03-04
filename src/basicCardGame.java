@@ -1,12 +1,34 @@
+ import javax.swing.*;
  import java.sql.Statement;
  import java.util.ArrayList;
  import java.util.Collections;
  import java.util.List;
  import java.lang.Math;
  import java.util.Scanner;
+ import java.awt.*;
+ import javax.swing.*;
 
 public class basicCardGame {
 
+
+    public static void createWindow(){
+        JFrame frame = new JFrame("blackjack");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel textLabel = new JLabel("The game of Jack Black, err, Blackjack", SwingConstants.CENTER);
+        textLabel.setPreferredSize(new Dimension(640, 480));
+
+        JButton buttonPlay = new JButton("Play");
+        JButton buttonStay = new JButton("Stay");
+        JPanel panel = new JPanel();
+        panel.add(buttonPlay);
+        panel.add(buttonStay);
+        frame.add(panel);
+        
+        frame.getContentPane().add(textLabel, BorderLayout.CENTER);
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
     public static void main (String[] args){
 
@@ -18,6 +40,9 @@ public class basicCardGame {
        // player2Hand(StarterDeck);
        // findPairs(player1Hand(StarterDeck));
        // findPairs(player2Hand(StarterDeck));
+
+
+        createWindow();
 
         StarterDeck = createDeck();
 
@@ -249,9 +274,11 @@ public class basicCardGame {
             handValue = currentHand.get(0).getRankInt()+ someDeck.get(0).getRankInt();
             //right
             handValueSplit = currentHandSplit.get(0).getRankInt() +someDeck.get(1).getRankInt();
+            System.out.println("Cash: " + cash  );
             System.out.println("Current hand  RIGHT: " + currentHand.get(0).getCard() +  "\t" + currentHand.get(1).getCard() + "");
             System.out.println("Current hand  LEFT : " + currentHandSplit.get(0).getCard() +  "\t" + currentHandSplit.get(1).getCard() + "");
-            System.out.println("Current value: " + handValue);
+            System.out.println("Current value RIGHT: " + handValue);
+            System.out.println("Current value LEFT : " + handValueSplit);
             System.out.println("_-_-_-_-_-_-_-");
             System.out.println(" SPLIT : Play or stay? \' type y/n \'");
             answer = scan.nextLine();
@@ -285,8 +312,11 @@ public class basicCardGame {
                 }
 
                 System.out.println("");
-                System.out.println("currentHand: " + handValue);
-                System.out.println("currentHandSPLIT: " + handValueSplit);
+                System.out.println("Cash: " + cash  );
+                System.out.println("Current hand  RIGHT: " + currentHand.get(0).getCard() +  "\t" + currentHand.get(1).getCard() + "");
+                System.out.println("Current hand  LEFT : " + currentHandSplit.get(0).getCard() +  "\t" + currentHandSplit.get(1).getCard() + "");
+                System.out.println("Current value RIGHT: " + handValue);
+                System.out.println("Current value LEFT : " + handValueSplit);
                 System.out.println(" Play or stay? \' type y/n \'");
                 answer = scan.next();
 
@@ -306,7 +336,7 @@ public class basicCardGame {
                     System.out.print(temp.getCard() + " ");
                 }
                 System.out.println("");
-                System.out.println("Double Win!!!");
+                System.out.println("Double Win!!! +$150");
                 cash += 150*buyinlevel;
             }
             else if (handValue > houseValue && handValue < 22) {
@@ -323,7 +353,7 @@ public class basicCardGame {
                     System.out.print(temp.getCard() + " ");
                 }
                 System.out.println("");
-                System.out.println("You Win");
+                System.out.println("You Win +$50");
                 cash += 50*buyinlevel;
             } else if (handValueSplit > houseValue && handValueSplit < 22){
                 System.out.print("houseHand  : " + houseValue + "\t\t\t");
@@ -340,7 +370,7 @@ public class basicCardGame {
                     System.out.print(temp.getCard() + " ");
                 }
                 System.out.println("");
-                System.out.println("You Win");
+                System.out.println("You Win +$50");
                 cash += 50*buyinlevel;
             }
             else {
@@ -357,7 +387,7 @@ public class basicCardGame {
                 }
                 System.out.println("");
 
-                System.out.println("You Lose");
+                System.out.println("You Lose -$100");
                 cash -= 100*buyinlevel;
             }
 
@@ -379,7 +409,7 @@ public class basicCardGame {
                 handValue += someDeck.get(0).getRankInt();
                 someDeck.remove(0);
 
-
+                //checking for ace
                 if (handValue > 21 && aceinHand == true) {
                     handValue = handValue - 10;
                 }
@@ -392,10 +422,11 @@ public class basicCardGame {
                 System.out.println("Current value: " + handValue);
 
                 if (handValue > 21) {
-                    System.out.println("Bust: You lose");
+                    System.out.println("You lose -$100");
                     break;
                 }
                 //System.out.println("houseHand :  " + houseValue);
+                System.out.println("Cash: " + cash  );
                 System.out.println("currentHand: " + handValue);
                 System.out.println(" Play or stay? \' type y/n \'");
                 answer = scan.next();
