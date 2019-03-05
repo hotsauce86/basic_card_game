@@ -1,4 +1,6 @@
  import javax.swing.*;
+ import java.awt.event.ActionEvent;
+ import java.awt.event.ActionListener;
  import java.sql.Statement;
  import java.util.ArrayList;
  import java.util.Collections;
@@ -8,48 +10,101 @@
  import java.awt.*;
  import javax.swing.*;
 
-public class basicCardGame {
+public class basicCardGame{
+    JLabel somenewlabel;
+    JButton button;
+    String hello = "";
 
+    public void actionPerformed(javafx.event.ActionEvent event){
+        somenewlabel.setText("wafflesmmmmmmmmmm");
+        hello = "MMMMMMMMMMM";
+    }
+    private static String answer2 = "wtfellow";
+    private static JLabel answerLabel;
 
-    public static void createWindow(){
+    public static void gameWindow(){
         JFrame frame = new JFrame("blackjack");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel textLabel = new JLabel("The game of Jack Black, err, Blackjack", SwingConstants.CENTER);
-        textLabel.setPreferredSize(new Dimension(640, 480));
+        JLabel textLabelHand = new JLabel("Current Hand: ", SwingConstants.CENTER);
+        JLabel textLabelHandSplit = new JLabel("...", SwingConstants.CENTER);
+        JLabel textLabelHandValue = new JLabel("Hand Value: ", SwingConstants.CENTER);
+        JLabel textLabelHandValueSplit = new JLabel("...", SwingConstants.CENTER);
+
+
+        frame.setPreferredSize(new Dimension(640, 480));
 
         JButton buttonPlay = new JButton("Play");
         JButton buttonStay = new JButton("Stay");
+        buttonPlay.setLayout(null);
+        buttonStay.setLayout(null);
+        buttonPlay.setSize(70,50);
+        buttonStay.setSize(70,50);
+        buttonPlay.setLocation(50,125);
+        buttonStay.setLocation(150, 125);
+
         JPanel panel = new JPanel();
         panel.add(buttonPlay);
         panel.add(buttonStay);
+
         frame.add(panel);
-        
-        frame.getContentPane().add(textLabel, BorderLayout.CENTER);
+        panel.add(textLabelHand, BorderLayout.CENTER);
+        panel.add(textLabelHandSplit, BorderLayout.CENTER);
+        panel.add(textLabelHandValue, BorderLayout.CENTER);
+        panel.add(textLabelHandValueSplit, BorderLayout.CENTER);
+
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
+
+
     }
+
+
+
 
     public static void main (String[] args){
 
+        JFrame frame = new JFrame("blackjack");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel textLabelHand = new JLabel("Current Hand: ", SwingConstants.CENTER);
+        JLabel textLabelHandSplit = new JLabel("...", SwingConstants.CENTER);
+        JLabel textLabelHandValue = new JLabel("Hand Value: ", SwingConstants.CENTER);
+        JLabel textLabelHandValueSplit = new JLabel("...", SwingConstants.CENTER);
+
+
+        frame.setPreferredSize(new Dimension(640, 480));
+
+        JButton buttonPlay = new JButton("Play");
+        JButton buttonStay = new JButton("Stay");
+        buttonPlay.setLayout(null);
+        buttonStay.setLayout(null);
+        buttonPlay.setSize(70,50);
+        buttonStay.setSize(70,50);
+        buttonPlay.setLocation(50,125);
+        buttonStay.setLocation(150, 125);
+
+        JPanel panel = new JPanel();
+        panel.add(buttonPlay);
+        panel.add(buttonStay);
+
+        frame.add(panel);
+        panel.add(textLabelHand, BorderLayout.CENTER);
+        panel.add(textLabelHandSplit, BorderLayout.CENTER);
+        panel.add(textLabelHandValue, BorderLayout.CENTER);
+        panel.add(textLabelHandValueSplit, BorderLayout.CENTER);
+
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+
+
+
+
         List<card> StarterDeck = new ArrayList<>();
-       // StarterDeck = createDeck();
-       // shuffleCards(StarterDeck);
-       // printDeck(StarterDeck);
-       // player1Hand(StarterDeck);
-       // player2Hand(StarterDeck);
-       // findPairs(player1Hand(StarterDeck));
-       // findPairs(player2Hand(StarterDeck));
-
-
-        createWindow();
-
         StarterDeck = createDeck();
-
         shuffleCards(StarterDeck);
         shuffleCards(StarterDeck);
         shuffleCards(StarterDeck);
-
         // basic deck, starting cash $200, buy-in multipier level 1
         gameOfBlackJack(StarterDeck, 200, 1);
 
@@ -94,64 +149,6 @@ public class basicCardGame {
         return someDeck;
     }
 
-    public static void printDeck(List<card> someDeck){
-        for(card temp : someDeck){
-            //System.out.print("["+temp.getRank()+","+temp.getSuit()+"]"+"  ");
-
-            System.out.print(temp.getCard() + ", ");
-        }
-    }
-
-    public static List<card> player1Hand(List<card> someDeck){
-        List<card> playerHand = new ArrayList<>();
-
-        for(int i =0; i < 7; i++){
-            playerHand.add(someDeck.get(i));
-            someDeck.remove(i);
-        }
-        System.out.println(" ");
-        System.out.println("Some deck length: " + someDeck.size());
-        for(int i = 0; i < playerHand.size(); i++){
-            System.out.print("["+ playerHand.get(i).getRank()+","+ playerHand.get(i).getSuit()+"]");
-        }
-
-        return playerHand;
-    }
-    public static List<card> player2Hand(List<card> someDeck){
-        List<card> playerHand = new ArrayList<>();
-
-        for(int i =0; i < 7; i++){
-            playerHand.add(someDeck.get(i));
-            someDeck.remove(i);
-        }
-        System.out.println(" ");
-        System.out.println("Some deck length: " + someDeck.size());
-        for(int i = 0; i < playerHand.size(); i++){
-            System.out.print("["+ playerHand.get(i).getRank()+","+ playerHand.get(i).getSuit()+"]");
-        }
-
-        return playerHand;
-    }
-
-    public static List<String> findPairs(List<card> somePlayer){
-        System.out.println("/////////Checking for Pairs///////////");
-        List<String> listOfPairs = new ArrayList<>();
-        List<card> somePlayerCopy = somePlayer;
-            card tempCard = somePlayerCopy.get(0);
-            //skip the first one we already have it
-            int seti = 1;
-            for(int j = 0; j < somePlayerCopy.size()-1; j++){
-                tempCard=somePlayerCopy.get(j);
-                for(int i = seti; i < somePlayerCopy.size(); i++){
-                    if(somePlayerCopy.get(i).getRankInt() == tempCard.getRankInt()){
-                        listOfPairs.add("[" + tempCard.getRank()+"," +tempCard.getSuit()+":"+somePlayerCopy.get(i).getRank()+","+somePlayerCopy.get(i).getSuit()+"]");
-                    }
-                }
-                seti++;
-            }
-        System.out.println(listOfPairs);
-        return listOfPairs;
-    }
 
     public static List<card> blackJackFaceCard(List<card> someHand){
         for(card temp : someHand){
@@ -171,6 +168,7 @@ public class basicCardGame {
 
     public static void gameOfBlackJack(List<card> someDeck, double wallet, double buyin){
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+
         Boolean aceinHand = false;
         Boolean aceinHouse = false;
         Boolean doublecards = false;
@@ -189,13 +187,13 @@ public class basicCardGame {
         System.out.println("");
         System.out.println("Let's play some Blackjack!");
         System.out.println("level: " + buyinlevel);
-
-
+        
         /*
                 BEFORE PLAY SECTION
          */
         if(wallet < 1){
             System.out.println("Hey, come back when you get some money huh.");
+
             System.exit(0);
         }
         //creating players hand
@@ -245,6 +243,8 @@ public class basicCardGame {
         System.out.println("Current hand : " + currentHand.get(0).getCard() +  "\t" + currentHand.get(1).getCard() + "");
         System.out.println("Current value: " + handValue);
         System.out.println("_-_-_-_-_-_-_-");
+
+
 
         if(doublecards == true){
             System.out.println("DOUBLE CARDS: Do you want to split? \' type y/n \'");
@@ -426,6 +426,9 @@ public class basicCardGame {
                     break;
                 }
                 //System.out.println("houseHand :  " + houseValue);
+
+
+
                 System.out.println("Cash: " + cash  );
                 System.out.println("currentHand: " + handValue);
                 System.out.println(" Play or stay? \' type y/n \'");
