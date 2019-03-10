@@ -244,14 +244,10 @@ public class basicCardGame{
             houseHand.add(someDeck.get(i));
             someDeck.remove(i);
         }
-        //check if we have an ace
-        /*
-        if(currentHand.get(0).getRankInt().equals(1) || currentHand.get(1).getRankInt().equals(1)){
-            System.out.println("We got an Ace!");
-            aceinHand = true;
-            handValue += 10;
-        }
-        */
+
+
+
+
         blackJackFaceCard(currentHand);
         blackJackFaceCard(houseHand);
         handValue = handValue + currentHand.get(0).getRankInt() + currentHand.get(1).getRankInt();
@@ -273,8 +269,6 @@ public class basicCardGame{
             if(answer.equals("y") || answer.equals("Y")){
                 goforsplit = true;
             }
-
-
         }
         if(goforsplit == true){
 
@@ -446,13 +440,22 @@ public class basicCardGame{
                     handValue = handValue - 10;
                 }
 
+
+                //print hand
+                print_currentHand(currentHand, handValue);
+                /*
                 System.out.print("Current hand:   ");
                 for (card temp : currentHand) {
                     System.out.print(temp.getCard());
                 }
                 System.out.println("");
                 System.out.println("Current value: " + handValue);
+                */
 
+
+
+
+                //loss state
                 if (handValue > 21) {
                     System.out.println("You lose -$100");
                     break;
@@ -470,6 +473,9 @@ public class basicCardGame{
             }
 
             if (handValue > houseValue && handValue < 22) {
+
+                print_both_currentHand_and_houseHand(houseValue,handValue, houseHand, currentHand);
+                /*
                 System.out.print("houseHand  : " + houseValue + "\t");
                 System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
                 System.out.print("currentHand: " + handValue + "\t");
@@ -477,10 +483,12 @@ public class basicCardGame{
                     System.out.print(temp.getCard() + " ");
                 }
                 System.out.println("");
+                */
                 System.out.println("You Win");
                 cash +=150*buyinlevel;
 
             } else {
+                /*
                 System.out.print("houseHand  : " + houseValue + "\t");
                 System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
                 System.out.print("currentHand: " + handValue + "\t");
@@ -488,6 +496,7 @@ public class basicCardGame{
                     System.out.print(temp.getCard() + " ");
                 }
                 System.out.println("");
+                */
 
                 System.out.println("You Lose");
                 cash -= 100*buyinlevel;
@@ -516,91 +525,46 @@ public class basicCardGame{
 
     }
 
-    public void currentRound(ArrayList<card> currentHand, ArrayList<card> houseHand, ArrayList<card> someDeck, int handValue, int houseValue, boolean aceinHand, double cash, double buyinlevel){
-        System.out.println(" Play or stay? \' type y/n \'");
-        Scanner scan = new Scanner(System.in);
-        String answer = scan.nextLine();
+    public void add_card_to_hand(ArrayList<card> currentHand, ArrayList<card> someDeck, int handValue){
 
-        System.out.println("answer is : " + answer);
-        while (answer.equals("y") || answer.equals("Y")) {
-            System.out.println("_-_-_-_-_-_-_-");
-            currentHand.add(someDeck.get(0));
+        System.out.println("_-_-_-_-_-_-_-");
+        currentHand.add(someDeck.get(0));
 
-            blackJackFaceCard(currentHand);
-            handValue += someDeck.get(0).getRankInt();
-            someDeck.remove(0);
-
-            //checking for ace
-            if (handValue > 21 && aceinHand == true) {
-                handValue = handValue - 10;
-            }
-
-            System.out.print("Current hand:   ");
-            for (card temp : currentHand) {
-                System.out.print(temp.getCard());
-            }
-            System.out.println("");
-            System.out.println("Current value: " + handValue);
-
-            if (handValue > 21) {
-                System.out.println("You lose -$100");
-                break;
-            }
-            //System.out.println("houseHand :  " + houseValue);
-
-
-
-            System.out.println("Cash: " + cash  );
-            System.out.println("currentHand: " + handValue);
-            System.out.println(" Play or stay? \' type y/n \'");
-            answer = scan.next();
-
-
-        }
-
-        if (handValue > houseValue && handValue < 22) {
-            System.out.print("houseHand  : " + houseValue + "\t");
-            System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
-            System.out.print("currentHand: " + handValue + "\t");
-            for (card temp : currentHand) {
-                System.out.print(temp.getCard() + " ");
-            }
-            System.out.println("");
-            System.out.println("You Win");
-            cash +=150*buyinlevel;
-
-        } else {
-            System.out.print("houseHand  : " + houseValue + "\t");
-            System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
-            System.out.print("currentHand: " + handValue + "\t");
-            for (card temp : currentHand) {
-                System.out.print(temp.getCard() + " ");
-            }
-            System.out.println("");
-
-            System.out.println("You Lose");
-            cash -= 100*buyinlevel;
-        }
-
-        buyinlevel += 0.1;
-        System.out.println("Cash: " + cash);
-        System.out.println(" Play Blackjack again? (buyin $100) \' type y/n \' \t\t(might need to type answer twice, sorry java is being weird)");
-
-        //scanner doesn't want to wake up the first time?
-        //newgame = scan.nextLine();
-        String newgame = scan.nextLine();
-
-        System.out.println("answer is : " + newgame);
-
-        if(newgame.equals("y") || newgame.equals("Y")){
-            cash -= 50;
-            someDeck = createDeck();
-            shuffleCards(someDeck);
-            gameOfBlackJack(someDeck, cash, buyinlevel);
-        }
-        System.out.println("Goodnight");
-        scan.close();
+        blackJackFaceCard(currentHand);
+        handValue += someDeck.get(0).getRankInt();
+        someDeck.remove(0);
     }
+
+    public int check_for_ace(boolean aceinHand, int handValue){
+        if (handValue > 21 && aceinHand == true) {
+             handValue = handValue - 10;
+        }
+
+        return handValue;
+    }
+
+    public static void print_currentHand(List<card> currentHand, int handValue){
+
+        System.out.print("Current hand:   ");
+        for (card temp : currentHand) {
+            System.out.print(temp.getCard());
+        }
+        System.out.println("");
+        System.out.println("Current value: " + handValue);
+
+    }
+
+    public static void print_both_currentHand_and_houseHand(int houseValue, int handValue, List<card> houseHand, List<card> currentHand){
+        System.out.print("houseHand  : " + houseValue + "\t");
+        System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
+        System.out.print("currentHand: " + handValue + "\t");
+        for (card temp : currentHand) {
+            System.out.print(temp.getCard() + " ");
+        }
+        System.out.println("");
+    }
+
+
 
 
 
