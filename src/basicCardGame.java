@@ -12,6 +12,7 @@
 
 public class basicCardGame{
     static JLabel somenewlabel =  new JLabel("");
+    static int somevalue =0;
     JButton button;
     static String hello = "";
 
@@ -86,39 +87,6 @@ public class basicCardGame{
 
     public static void main (String[] args){
 
-        JFrame frame = new JFrame("blackjack");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel textLabelHand = new JLabel("Current Hand: ", SwingConstants.CENTER);
-        JLabel textLabelHandSplit = new JLabel("...", SwingConstants.CENTER);
-        JLabel textLabelHandValue = new JLabel("Hand Value: ", SwingConstants.CENTER);
-        JLabel textLabelHandValueSplit = new JLabel("...", SwingConstants.CENTER);
-
-
-        frame.setPreferredSize(new Dimension(640, 480));
-
-        JButton buttonPlay = new JButton("Play");
-        JButton buttonStay = new JButton("Stay");
-        buttonPlay.setLayout(null);
-        buttonStay.setLayout(null);
-        buttonPlay.setSize(70,50);
-        buttonStay.setSize(70,50);
-        buttonPlay.setLocation(50,125);
-        buttonStay.setLocation(150, 125);
-
-        JPanel panel = new JPanel();
-        panel.add(buttonPlay);
-        panel.add(buttonStay);
-
-        frame.add(panel);
-        panel.add(textLabelHand, BorderLayout.CENTER);
-        panel.add(textLabelHandSplit, BorderLayout.CENTER);
-        panel.add(textLabelHandValue, BorderLayout.CENTER);
-        panel.add(textLabelHandValueSplit, BorderLayout.CENTER);
-
-        frame.setLocationRelativeTo(null);
-        frame.pack();
-        frame.setVisible(true);
-
 
         List<card> StarterDeck = new ArrayList<>();
         StarterDeck = createDeck();
@@ -189,6 +157,70 @@ public class basicCardGame{
     public static void gameOfBlackJack(List<card> someDeck, double wallet, double buyin){
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
 
+
+
+        String buttonAnswer= "";
+
+
+        JFrame frame = new JFrame("blackjack");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel textLabelHand = new JLabel("Current Hand: ", SwingConstants.CENTER);
+        JLabel textLabelHandSplit = new JLabel("...", SwingConstants.CENTER);
+        JLabel textLabelHandValue = new JLabel("Hand Value: ", SwingConstants.CENTER);
+        JLabel textLabelHandValueSplit = new JLabel("...", SwingConstants.CENTER);
+
+
+        frame.setPreferredSize(new Dimension(640, 480));
+
+        JButton buttonPlay = new JButton("Play");
+        JButton buttonStay = new JButton("Stay");
+        buttonPlay.setLayout(null);
+        buttonStay.setLayout(null);
+        buttonPlay.setSize(70,50);
+        buttonStay.setSize(70,50);
+        buttonPlay.setLocation(50,125);
+        buttonStay.setLocation(150, 125);
+
+        JPanel panel = new JPanel();
+        panel.add(buttonPlay);
+        panel.add(buttonStay);
+
+        frame.add(panel);
+        panel.add(textLabelHand, BorderLayout.CENTER);
+        panel.add(textLabelHandSplit, BorderLayout.CENTER);
+        panel.add(textLabelHandValue, BorderLayout.CENTER);
+        panel.add(textLabelHandValueSplit, BorderLayout.CENTER);
+
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+
+
+        buttonPlay.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("clicked play");
+
+                somevalue = 1;
+                somenewlabel.setText("y");
+
+            }
+        });
+
+        buttonStay.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("clicked stay");
+                somevalue = 2;
+                somenewlabel.setText("N");
+            }
+        });
+
+
+
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         Boolean aceinHand = false;
         Boolean aceinHouse = false;
         Boolean doublecards = false;
@@ -199,6 +231,7 @@ public class basicCardGame{
         double buyinlevel = buyin;
         double cash = wallet;
         String newgame = "";
+
         String answer = "";
         Scanner scan = new Scanner(System.in);
         List<card> currentHand = new ArrayList();
@@ -368,14 +401,14 @@ public class basicCardGame{
                     System.out.print(temp.getCard() + " ");
                 }
                 System.out.println("");
+
+
                 System.out.println("You Win +$50");
                 cash += 50*buyinlevel;
             } else if (handValueSplit > houseValue && handValueSplit < 22){
                 System.out.print("houseHand  : " + houseValue + "\t\t\t");
                 System.out.println(houseHand.get(0).getCard() + " " + houseHand.get(1).getCard());
-
                 System.out.print("currentHand RIGHT: " + handValue + "\t");
-
                 for (card temp : currentHand) {
                     System.out.print(temp.getCard() + " ");
                 }
@@ -385,6 +418,8 @@ public class basicCardGame{
                     System.out.print(temp.getCard() + " ");
                 }
                 System.out.println("");
+
+
                 System.out.println("You Win +$50");
                 cash += 50*buyinlevel;
             }
@@ -539,7 +574,6 @@ public class basicCardGame{
         if (handValue > 21 && aceinHand == true) {
              handValue = handValue - 10;
         }
-
         return handValue;
     }
 
